@@ -1,9 +1,12 @@
 package de.walkmydog.api;
 
+import spark.Spark;
+
 public class WalkMyDog {
 
     public static void main(String... args) {
-        System.out.println("Application booted successfully");
+        Spark.port(8080);
+        Spark.get("/ping", (request, response) -> 1);
     }
 
 }
