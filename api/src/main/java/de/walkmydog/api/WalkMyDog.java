@@ -1,5 +1,6 @@
 package de.walkmydog.api;
 
+import de.walkmydog.api.user.AuthRoute;
 import spark.Spark;
 
 public class WalkMyDog {
@@ -12,6 +13,8 @@ public class WalkMyDog {
             response.status(200);
             return "Health Check OK";
         });
+
+        new AuthRoute();
     }
 
 }
