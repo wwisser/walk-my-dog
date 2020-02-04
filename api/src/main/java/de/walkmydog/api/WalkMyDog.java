@@ -4,9 +4,14 @@ import spark.Spark;
 
 public class WalkMyDog {
 
+    private static final int PORT = 8080;
+
     public static void main(String... args) {
-        Spark.port(8080);
-        Spark.get("/ping", (request, response) -> 1);
+        Spark.port(PORT);
+        Spark.get("/ping", (request, response) -> {
+            response.status(200);
+            return "Health Check OK";
+        });
     }
 
 }
