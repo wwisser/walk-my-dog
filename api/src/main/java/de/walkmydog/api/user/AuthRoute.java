@@ -1,29 +1,53 @@
 package de.walkmydog.api.user;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import java.util.UUID;
 import org.eclipse.jetty.http.HttpStatus;
 import org.mindrot.jbcrypt.BCrypt;
 import spark.Request;
 import spark.Response;
 import spark.Spark;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 public class AuthRoute {
 
     private final UserStorage userStorage;
     private final Gson gson = new Gson();
+    private final TokenRegistry tokenRegistry = new TokenRegistry();
 
-    public AuthRoute() {
-        this.userStorage = new LocalUserStorage();
+    public AuthRoute(UserStorage userStorage) {
+        this.userStorage = userStorage;
 
         Spark.post("/auth", this::handleAuthorization);
         Spark.post("/register", this::handleRegistration);
     }
 
     private Object handleAuthorization(Request request, Response response) throws Exception {
-        return null;
+        Credentials credentials = this.gson.fromJson(request.body(), Credentials.class);
+        
+        User user = this.userStorage.findByName(credentials.name);
+        
+        if (null == user) {
+            Spark.halt(HttpStatus.UNAUTHORIZED_401, "User name does not exist.");
+            return null;
+        }
+        
+        boolean validPasswd = BCrypt.checkpw(
+            credentials.password,
+            user.getPasswordHash()
+        );
+        
+        if (!validPasswd) {
+            Spark.halt(HttpStatus.UNAUTHORIZED_401, "Given password is wrong.");
+            return null;
+        }
+        
+        UUID uuid = this.tokenRegistry.createToken(user.getId());
+        
+        JsonObject tokenObject = new JsonObject();
+        tokenObject.addProperty("token", uuid.toString());
+        
+        return this.gson.toJson(tokenObject);
     }
 
     private Object handleRegistration(Request request, Response response) throws Exception {
@@ -43,45 +67,6 @@ public class AuthRoute {
     private static class Credentials {
         private String name;
         private String password;
-    }
-
-    /**
-     * Dummy storage implementation due to testing.
-     */
-    private static class LocalUserStorage implements UserStorage {
-
-        private final List<User> users = new CopyOnWriteArrayList<>();
-
-        @Override
-        public User findById(int id) {
-            return this.users
-                .stream()
-                .filter(user -> user.getId() == id)
-                .findAny()
-                .orElse(null);
-        }
-
-        @Override
-        public User findByName(String name) {
-            return this.users
-                .stream()
-                .filter(user -> name.equals(user.getName()))
-                .findAny()
-                .orElse(null);
-        }
-
-        @Override
-        public User saveUser(String name, String password) {
-            int id = this.users.stream().mapToInt(User::getId).max().orElse(0) + 1;
-
-            String hash = BCrypt.hashpw(password, BCrypt.gensalt());
-
-            User user = new User(id, name, hash);
-            this.users.add(user);
-
-            return user;
-        }
-
     }
 
 }
