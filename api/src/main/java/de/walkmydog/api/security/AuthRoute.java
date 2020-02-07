@@ -42,7 +42,7 @@ public class AuthRoute {
 
             String authHeader = request.headers("Authorization");
 
-            if (authHeader == null || authHeader.trim().isEmpty()) {
+            if (this.isNullOrEmpty(authHeader)) {
                 Spark.halt(HttpStatus.UNAUTHORIZED_401, "Authorization Header not given.");
                 return;
             }
