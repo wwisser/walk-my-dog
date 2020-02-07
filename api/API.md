@@ -15,10 +15,10 @@ curl http://localhost:8080/ping
 
 ## Routes
 
-##### /ping
+##### GET /ping
 A simple ping endpoint which returns SC 200 for testing purposes.
 
-#### /register
+#### POST /register
 Used for user registration.
 Consumes a credentials JSON object:
 ```json
@@ -28,7 +28,7 @@ Consumes a credentials JSON object:
 }
 ```
 
-#### /auth
+#### POST /auth
 Generates an authorization token for the given user credentials:
 ```json
 {
