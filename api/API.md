@@ -27,3 +27,19 @@ Consumes a credentials JSON object:
   "password": "passwd"
 }
 ```
+
+#### /auth
+Generates an authorization token for the given user credentials:
+```json
+{
+  "name": "Wende",
+  "password": "passwd"
+}
+```
+
+And returns a JSON object with the generated token, if logged in successfully:
+```json
+{
+  "token": "4c8cb23b-0655-4e15-96b2-8e1ee10376e6"
+}
+```
