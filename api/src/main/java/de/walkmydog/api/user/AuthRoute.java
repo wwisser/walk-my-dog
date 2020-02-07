@@ -16,7 +16,8 @@ public class AuthRoute {
     
     private static final Set<String> EXCLUDED_ROUTES = Stream.of(
         "/auth",
-        "/register"
+        "/register",
+        "/ping"
     ).collect(Collectors.toSet());
 
     private final UserStorage userStorage;
