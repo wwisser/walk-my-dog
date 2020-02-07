@@ -22,7 +22,7 @@ public class TokenRegistry {
         return uuid;
     }
     
-    public boolean checkAndUpdate(UUID uuid, int userId) {
+    public boolean checkAndUpdate(UUID uuid) {
         Token token = this.tokens.get(uuid);
         
         if (token == null) {
