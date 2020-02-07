@@ -2,7 +2,6 @@ package de.walkmydog.api;
 
 import de.walkmydog.api.user.AuthRoute;
 import de.walkmydog.api.user.LocalUserStorage;
-import de.walkmydog.api.user.UserStorage;
 import spark.Spark;
 
 public class WalkMyDog {
@@ -16,13 +15,7 @@ public class WalkMyDog {
             return "Health Check OK";
         });
         
-        UserStorage userStorage = new LocalUserStorage();
-        
-        Spark.before((request, response) -> {
-            
-        });
-        
-        new AuthRoute(userStorage);
+        new AuthRoute(new LocalUserStorage());
     }
 
 }
