@@ -1,6 +1,6 @@
 package de.walkmydog.api;
 
-import de.walkmydog.api.user.AuthRoute;
+import de.walkmydog.api.security.AuthRoute;
 import de.walkmydog.api.user.LocalUserStorage;
 import spark.Spark;
 

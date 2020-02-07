@@ -1,6 +1,7 @@
-package de.walkmydog.api.user;
+package de.walkmydog.api.security;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -22,11 +23,11 @@ public class TokenRegistry {
         return uuid;
     }
     
-    public boolean checkAndUpdate(UUID uuid) {
+    public Optional<Token> checkAndUpdate(UUID uuid) {
         Token token = this.tokens.get(uuid);
         
         if (token == null) {
-            return false;
+            return Optional.empty();
         }
         
         long now = System.currentTimeMillis();
@@ -34,38 +35,10 @@ public class TokenRegistry {
         
         if (valid) {
             token.setValidUntil(now + TTL);
+            return Optional.of(token);
         } else {
             this.tokens.remove(uuid);
-        }
-        
-        return valid;
-    }
-    
-    private static final class Token {
-        private final UUID uuid;
-        private final int userId;
-        private long validUntil;
-
-        public Token(UUID uuid, int userId, long validUntil) {
-            this.uuid = uuid;
-            this.userId = userId;
-            this.validUntil = validUntil;
-        }
-
-        public UUID getUuid() {
-            return this.uuid;
-        }
-
-        public int getUserId() {
-            return this.userId;
-        }
-
-        public long getValidUntil() {
-            return this.validUntil;
-        }
-
-        public void setValidUntil(long validUntil) {
-            this.validUntil = validUntil;
+            return Optional.empty();
         }
     }
     
