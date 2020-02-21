@@ -1,5 +1,7 @@
 package de.walkmydog.api.security;
 
+import org.bson.types.ObjectId;
+
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -12,7 +14,7 @@ public class TokenRegistry {
     
     private final Map<UUID, Token> tokens = new ConcurrentHashMap<>();
     
-    public UUID createToken(int userId) {
+    public UUID createToken(ObjectId userId) {
         UUID uuid = UUID.randomUUID();
         
         this.tokens.put(

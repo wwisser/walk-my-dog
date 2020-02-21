@@ -1,7 +1,6 @@
 package de.walkmydog.api.security;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 
 import java.util.Optional;
 import java.util.Set;
@@ -26,7 +25,17 @@ public class AuthRoute {
     ).collect(Collectors.toSet());
 
     private final UserStorage userStorage;
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder()
+        .registerTypeAdapter(User.class, (JsonSerializer<User>) (user, type, context) -> {
+            JsonObject jsonObject = new JsonObject();
+
+            jsonObject.addProperty("id", user.getId().toString());
+            jsonObject.addProperty("name", user.getName());
+
+            return jsonObject;
+        })
+
+        .create();
     private final TokenRegistry tokenRegistry = new TokenRegistry();
 
     public AuthRoute(UserStorage userStorage) {

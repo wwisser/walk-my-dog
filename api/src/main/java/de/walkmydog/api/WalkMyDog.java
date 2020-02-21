@@ -1,15 +1,10 @@
 package de.walkmydog.api;
 
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
+import com.mongodb.client.MongoDatabase;
 import de.walkmydog.api.security.AuthRoute;
-import de.walkmydog.api.user.LocalUserStorage;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.codecs.pojo.PojoCodecProvider;
-import org.bson.codecs.configuration.CodecRegistries;
+import de.walkmydog.api.user.MongoUserStorage;
 import spark.Spark;
-
-import java.util.function.Consumer;
 
 public class WalkMyDog {
 
@@ -23,32 +18,10 @@ public class WalkMyDog {
             return "Health Check OK";
         });
 
-        new AuthRoute(new LocalUserStorage());
+        MongoDatabase adminDb = new MongoClient(MONGO_HOST)
+            .getDatabase("admin");
 
-        CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(
-            MongoClient.getDefaultCodecRegistry(),
-            CodecRegistries.fromProviders(
-                PojoCodecProvider
-                    .builder()
-                    .automatic(true)
-                    .build()
-            )
-        );
-
-        MongoClient mongoClient = new MongoClient(
-            MONGO_HOST,
-            MongoClientOptions
-                .builder()
-                .codecRegistry(pojoCodecRegistry)
-                .build()
-        );
-
-        mongoClient.listDatabaseNames().forEach(new Consumer<String>() {
-            @Override
-            public void accept(String s) {
-                System.out.println(s);
-            }
-        });
+        new AuthRoute(new MongoUserStorage(adminDb));
     }
 
 }

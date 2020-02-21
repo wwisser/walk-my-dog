@@ -1,14 +1,16 @@
 package de.walkmydog.api.security;
 
+import org.bson.types.ObjectId;
+
 import java.util.UUID;
 
 public class Token {
 
     private final UUID uuid;
-    private final int userId;
+    private final ObjectId userId;
     private long validUntil;
 
-    public Token(UUID uuid, int userId, long validUntil) {
+    public Token(UUID uuid, ObjectId userId, long validUntil) {
         this.uuid = uuid;
         this.userId = userId;
         this.validUntil = validUntil;
@@ -18,7 +20,7 @@ public class Token {
         return this.uuid;
     }
 
-    public int getUserId() {
+    public ObjectId getUserId() {
         return this.userId;
     }
 
