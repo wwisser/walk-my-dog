@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+  <Toolbar/>
     <Auth v-if="!this.isLoggedIn" />
     <HelloWorld v-if="this.isLoggedIn" msg="Welcome to Your Vue.js App"/>
     <Dashboard/>
@@ -10,6 +11,7 @@
 <script>
 import HelloWorld from '@/components/HelloWorld.vue'
 import Auth from '@/components/Auth.vue'
+import Toolbar from '@/components/Toolbar.vue'
 
 export default {
   data() {
@@ -20,7 +22,8 @@ export default {
   name: 'App',
   components: {
     HelloWorld,
-    Auth
+    Auth,
+    Toolbar
   }
 }
 </script>
