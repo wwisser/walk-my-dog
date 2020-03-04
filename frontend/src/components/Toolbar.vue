@@ -61,6 +61,9 @@ export default {
 </script>
 
 <style scoped>
+#toolbar {
+margin-bottom: 100px;
+}
 
 img {
   float: left;  
