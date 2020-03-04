@@ -5,8 +5,14 @@
 
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-   <b-navbar-brand href="#">WalkMyDog</b-navbar-brand>
+   <!--<b-navbar-brand href="#">WalkMyDog</b-navbar-brand>-->
     <!--<img :src="img.white_logo"> -->
+    <b-img left
+         :src="require('@/assets/wmd_logo_white.png')"
+         height="35px"
+         width="auto"
+         alt="WalkMyDog Logo"
+  />
     
 
     <b-collapse is-nav id="nav_collapse">
