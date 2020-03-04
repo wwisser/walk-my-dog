@@ -1,3 +1,5 @@
 <template>
-<h5>Home</h5>
+  <div class="home">
+  <h5>Home</h5>
+  </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
     <div id="toolbar">
-        <router-view></router-view>
+        <!--<router-view></router-view>--> <!-- HOME -->
         <b-navbar toggleable="md" type="dark" class="nav-background">
 
             <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
@@ -55,6 +55,16 @@
 
 <script>
 export default {
+    name: 'Toolbar'
 
 }
 </script>
+
+<style scoped>
+
+img {
+  float: left;  
+  margin: 5px 5px
+}
+
+</style>

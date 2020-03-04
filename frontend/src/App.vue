@@ -1,15 +1,14 @@
 <template>
   <div id="app">
-  <Toolbar/>
+  <Toolbar />
     <Auth v-if="!this.isLoggedIn" />
-    <HelloWorld v-if="this.isLoggedIn" msg="Welcome to Your Vue.js App"/>
-    <Dashboard/>
+    <!--<HelloWorld v-if="this.isLoggedIn" msg="Welcome to Your Vue.js App"/>-->
     <!--<router-view  v-if="this.isLoggedIn"/>-->
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue'
+//import HelloWorld from '@/components/HelloWorld.vue'
 import Auth from '@/components/Auth.vue'
 import Toolbar from '@/components/Toolbar.vue'
 
@@ -21,9 +20,8 @@ export default {
   },
   name: 'App',
   components: {
-    HelloWorld,
-    Auth,
-    Toolbar
+    Toolbar,
+    Auth
   }
 }
 </script>
@@ -35,6 +33,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

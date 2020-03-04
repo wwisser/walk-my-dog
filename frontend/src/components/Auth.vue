@@ -1,6 +1,5 @@
 <template>
   <div id="allauth">
-   <router-view></router-view>
   <b-container>
     <b-row align-h="center" class="mt-5">
       <b-col cols="5">
@@ -9,7 +8,7 @@
           <h3 class="mb-4">Login</h3>
           <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group id="exampleInputGroup1"
-                    label="Email address:"
+                    label ="Email address:"
                     label-for="exampleInput1"
                     >
         <b-form-input id="exampleInput1"
@@ -41,7 +40,7 @@
           <!--<b-button type="reset" variant="danger">Reset</b-button> -->
         </div>
         <div>
-          <a href="#" v-b-modal.modal1>Forgot Password</a>
+          <a href="" v-b-modal.modal1>Forgot Password</a>
         </div>
       </div>
     </b-form>
@@ -50,10 +49,10 @@
     </b-row>
   </b-container>
 
-  <b-modal id="modal1" title="Forgot Password">
+  <!--<b-modal id="modal1" title="Forgot Password">
       
     </b-modal>
-
+  -->
   </div>
 </template>
 
